@@ -71,5 +71,15 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	@GetMapping("memberPage")
+	public ModelAndView getMemberPage(MemberVO memberVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberVO = memberService.getMemberLogin(memberVO);
+		
+		mv.setViewName("member/memberPage");
+		
+		return mv;
+	}
 
 }

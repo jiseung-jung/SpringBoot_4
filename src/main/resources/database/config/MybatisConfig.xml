@@ -11,6 +11,7 @@
   		
   		<typeAlias type="com.jiseung.sb4.member.MemberVO" alias="MemberVO"/>
   		<typeAlias type="com.jiseung.sb4.member.MemberFileVO" alias="MemberFileVO"/>
+  		<typeAlias type="com.jiseung.sb4.member.MemberRoleVO" alias="MemberRoleVO"/>
   		
   		
   		

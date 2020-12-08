@@ -30,7 +30,7 @@
 	<!-- 로그인 상태 -->
 	   <c:if test="${not empty member}">
 	     <ul class="nav navbar-nav navbar-right">
-	      <li><a href="${pageContext.request.contextPath}/member/memberJoin"><span class="glyphicon glyphicon-user"></span> MyPage</a></li>
+	      <li><a href="${pageContext.request.contextPath}/member/memberPage"><span class="glyphicon glyphicon-user"></span> MyPage</a></li>
 	      <li><a href="${pageContext.request.contextPath}/member/memberLogout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
 	     </ul>
    	   </c:if>
