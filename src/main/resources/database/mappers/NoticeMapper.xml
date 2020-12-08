@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+    <mapper namespace="com.jiseung.sb4.board.notice.NoticeMapper">
+    	<sql id="getSearch">
+    	   <choose>
+    			<when test="kind == 'title'">
+    				title
+    			</when>
+    			
+    			<when test="kind == 'writer'">
+    				writer
+    			</when>
+    			
+    			<otherwise>
+    				contents
+    			</otherwise>
+    		</choose>
+    		like concat('%', #{search}, '%') and num>0
+   		</sql>
+    
+    	<select id="getList" parameterType="Pager" resultType="NoticeVO">
+    		select * from notice where 
+    		<include refid="getSearch"></include>
+    		order by num desc 
+    		limit #{startRow}, #{perPage}
+    	</select>
+    	
+    	<select id="getCount" parameterType="Pager" resultType="Long">
+    		select count(num) from notice where 
+			<include refid="getSearch"></include>
+    	</select>
+    
+    	<insert id="setInsert" parameterType="NoticeVO" useGeneratedKeys="true" keyProperty="num">
+    		insert into notice (num, title, writer, contents, regDate, hit) 
+    		values (#{num}, #{title}, #{writer}, #{contents}, sysdate(), 0) <!-- 자동 증가를 위해 num을 받음 -->
+    	</insert>
+    	
+    	<update id="setUpdate" parameterType="NoticeVO">
+    		update notice set title=#{title}, writer=#{writer}, contents=#{contents}
+    		where num=#{num}
+    	</update>
+    	
+    	<delete id="setDelete" parameterType="NoticeVO">
+    		delete from notice where num=#{num}
+    	</delete>
+    	
+    	<select id="getOne" parameterType="NoticeVO" resultType="NoticeVO" resultMap="getOneResult">
+    		select N.*, NF.* from 
+			notice N left join noticeFiles NF
+			on N.num = NF.num
+			where N.num = #{num};
+    	</select>
+    	
+    	<resultMap type="NoticeVO" id="getOneResult">
+    		<id column="num" property="num"/>
+    		<result column="title" property="title"/>
+    		<result column="writer" property="writer"/>
+    		<result column="contents" property="contents"/>
+    		<result column="regDate" property="regDate"/>
+    		<result column="hit" property="hit"/>
+    		
+    	 <collection property="files" ofType="FileVO" javaType="java.util.List">
+            <id column="fnum" property="fnum"/>
+            <!-- num은 위에있는 num하고 똑같은 거니까 안써도 됨 -->
+            <result column="fileName" property="fileName"/>
+            <result column="oriName" property="oriName"/>
+         </collection>
+    	</resultMap>
+    	
+    	
+    	
+    	
+    	<!-- **********************file********************** -->
+    	
+    	<insert id="setInsertFile" parameterType="FileVO">
+    		insert into noticeFiles (num, fileName, oriName) 
+    		values (#{num}, #{fileName}, #{oriName})
+    	</insert>
+    	
+    	<select id="getFile" parameterType="FileVO" resultType="FileVO">
+    		select * from noticeFiles where fnum=#{fnum}
+    	</select>
+    	
+    	
+    	
+    	
+    	
+    </mapper>
+    
+    
+    
+    
