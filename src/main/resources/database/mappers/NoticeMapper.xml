@@ -52,7 +52,7 @@
     		select N.*, NF.* from 
 			notice N left join noticeFiles NF
 			on N.num = NF.num
-			where N.num = #{num};
+			where N.num = #{num}
     	</select>
     	
     	<resultMap type="NoticeVO" id="getOneResult">

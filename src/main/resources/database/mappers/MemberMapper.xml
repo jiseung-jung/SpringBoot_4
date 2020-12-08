@@ -35,6 +35,7 @@
     		limit #{startRow}, #{perPage} 
     	</select>
     	
+    	
     	<select id="getMemberLogin" parameterType="MemberVO" resultMap="MemberInfo">
     		<!-- select * from member where id=#{id} and pw=#{pw} -->
     		
@@ -42,12 +43,19 @@
 			select M.id, M.name, MR.role from
 			member M inner join memberRole MR
 			using (id) <!-- on M.id = MR.id -->
+			left join memberFile MF
+			on M.id = MF.id
 			where M.id = #{id} and M.pw = #{pw};
     	</select>
     	
     	<resultMap type="MemberVO" id="MemberInfo">
     		<id column="id" property="id"/>
     		<result column="name" property="name"/>
+    		<association property="memberFileVO" javaType="MemberFileVO">
+    			<id column="filenum" property="num"/>
+    			<result column="fileName" property="fileName"/>
+    			<result column="oriName" property="oriName"/>
+    		</association>
     		
     		<collection property="roles" ofType="MemberRoleVO" javaType="java.util.List">
             	<result column="role" property="role"/>

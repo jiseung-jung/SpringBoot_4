@@ -19,13 +19,14 @@
 <c:import url="../template/header.jsp"></c:import>
 
 <div class="container">
-  <h3>${board} Write</h3>
-  <p>The .navbar-right class is used to right-align navigation bar buttons.</p>
+  <h3>${board} Update</h3>
+  <hr>
   
-    <form action="./${board}Write" method="post" enctype="multipart/form-data">
+  <form action="./${board}Update" method="post" enctype="multipart/form-data">
+    <input type="hidden" value="${vo.num}" name="num">
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+      <input type="text" class="form-control" id="title" value="${vo.title}" name="title">
     </div>
     
     <div class="form-group">
@@ -35,7 +36,7 @@
 
     <div class="form-group">
  	 <label for="contents">Contents:</label>
-  	 <textarea class="form-control" rows="5" id="contents" name="contents"></textarea>
+  	 <textarea class="form-control" rows="5" id="contents" name="contents">${vo.contents}</textarea>
 	</div>
 	
 	<div class="form-group">
@@ -44,7 +45,7 @@
       <input type="file" class="form-control" name="files">
     </div>
 
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default">Update</button>
   </form>
   
 </div>

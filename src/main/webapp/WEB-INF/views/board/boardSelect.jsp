@@ -10,32 +10,46 @@
 
 <c:import url="../template/bootStrap.jsp"></c:import>
 
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
 </head>
 <body>
 <c:import url="../template/header.jsp"></c:import>
 
 <div class="container">
+	<form action="" id="frm">
+		<input type="hidden" value="${vo.num}" name="num">
+	</form>  
+	
   <h3>${board} Select</h3>
-  <p>The .navbar-right class is used to right-align navigation bar buttons.</p>
-  
+  <hr>
 
-	<div>
-		<h3>Num : ${vo.num}</h3>
 		<h3>Title : ${vo.title}</h3>
 		<h3>Writer : ${vo.writer}</h3>
-		<h3>Contents : ${vo.contents}</h3><br>
-		
+		<h3>Contents : ${vo.contents}</h3>
+		<h3>file : </h3>
   <c:forEach items="${vo.files}" var="file">
   	<a href="noticeFileDown?fnum=${file.fnum}">${file.oriName}</a><br>
   </c:forEach>
+  <br>
+  <button class="btn btn-default go" title="Update">Update</button>
+  <button class="btn btn-default go" title="Delete">Delete</button>
 		
-	</div>  
 </div>
 
+<script type="text/javascript">
+	$(".go").click(function(){
+		var board = '${board}';
+		var t = $(this).attr("title");
+
+		if(t=='Delete'){
+			$("#frm").attr("method", "post");
+		}
+	
+		$("#frm").attr("action", board+t);
+
+		$("#frm").submit();
+		
+		});
+</script>
 
 
 </body>

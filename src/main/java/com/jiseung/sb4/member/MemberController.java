@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -58,10 +59,10 @@ public class MemberController {
 	}
 	
 	@PostMapping("memberJoin")
-	public ModelAndView setInsert(MemberVO memberVO) throws Exception{
+	public ModelAndView setInsert(MemberVO memberVO, MultipartFile [] files) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
-		int result = memberService.setInsert(memberVO);
+		int result = memberService.setInsert(memberVO, files);
 		
 		if(result>0) {
 			mv.addObject("msg", "가입 완료");

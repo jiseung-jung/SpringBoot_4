@@ -17,6 +17,7 @@
         </ul>
       </li>
       <li><a href="${pageContext.request.contextPath}/notice/noticeList">NOTICE</a></li>
+      <li><a href="${pageContext.request.contextPath}/qna/qnaList">QnA</a></li>
     </ul>
     
     <!-- 로그아웃 상태 -->

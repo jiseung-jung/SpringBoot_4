@@ -14,5 +14,6 @@ public class MemberVO {
 	private String email;
 	
 	private List<MemberRoleVO> roles;
+	private MemberFileVO memberFileVO;
 
 }

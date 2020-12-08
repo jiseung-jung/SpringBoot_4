@@ -5,7 +5,6 @@
   
   <configuration>
   	<typeAliases>
-  		<typeAlias type="com.jiseung.sb4.board.BoardVO" alias="BoardVO"/>
   		<typeAlias type="com.jiseung.sb4.board.notice.NoticeVO" alias="NoticeVO"/>
   		<typeAlias type="com.jiseung.sb4.board.file.FileVO" alias="FileVO"/>
   		

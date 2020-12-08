@@ -64,9 +64,10 @@ public class NoticeController {
 		}
 		
 		int result = noticeService.setInsert(boardVO, files);
-		String msg = "글작성이 완료됐습니다.";
+		String msg = "글작성에 실패했습니다.";
 		
 		if(result>0) {
+			msg = "글작성에 성공했습니다.";
 			mv.addObject("result", msg);
 			mv.addObject("path", "./noticeList");
 			mv.setViewName("common/result");
@@ -98,6 +99,54 @@ public class NoticeController {
 		mv.addObject("filePath", filePath);
 		mv.setViewName("fileDown");
 		
+		return mv;
+	}
+	
+	@GetMapping("noticeUpdate")
+	public ModelAndView setUpdate(BoardVO boardVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		boardVO = noticeService.getOne(boardVO);
+		
+		mv.addObject("vo", boardVO);
+		mv.setViewName("board/boardUpdate");
+		
+		return mv;
+		
+	}
+	
+	@PostMapping("noticeUpdate")
+	public ModelAndView setUpdate(BoardVO boardVO, String msg) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = noticeService.setUpdate(boardVO);
+		msg = "수정 실패";
+		
+		if(result>0) {
+			msg = "수정 성공";
+			mv.addObject("msg", msg);
+			mv.addObject("path", "./noticeSelect?num="+boardVO.getNum());
+			mv.setViewName("common/result");
+		}
+		
+		return mv;
+	}
+	
+	
+	@PostMapping("noticeDelete")
+	public ModelAndView setDelete(BoardVO boardVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		
+		int result = noticeService.setDelete(boardVO);
+		String msg = "삭제 실패";
+		
+		if(result>0) {
+			msg = "삭제 완료";
+			mv.addObject("msg", msg);
+		}
+		
+		mv.addObject("path","./noticeList");
+		mv.setViewName("common/result");
 		return mv;
 	}
 	
