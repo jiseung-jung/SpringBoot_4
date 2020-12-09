@@ -1,14 +1,17 @@
 package com.jiseung.sb4.member;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
 @RequestMapping("/member/**")
@@ -51,7 +54,7 @@ public class MemberController {
 	
 	
 	@GetMapping("memberJoin")
-	public ModelAndView setInsert() throws Exception{
+	public ModelAndView setInsert(MemberVO memberVO) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName("/member/memberJoin");
@@ -59,8 +62,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("memberJoin")
-	public ModelAndView setInsert(MemberVO memberVO, MultipartFile [] files) throws Exception{
+	public ModelAndView setInsert(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile [] files) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		
+		if(bindingResult.hasErrors()) {
+			mv.setViewName("member/memberJoin");
+			return mv;
+		}
 		
 		int result = memberService.setInsert(memberVO, files);
 		
