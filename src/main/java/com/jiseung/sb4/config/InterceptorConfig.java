@@ -9,7 +9,7 @@ import com.jiseung.sb4.interceptor.CustomInterceptor;
 import com.jiseung.sb4.interceptor.NoticeAdminInterceptor;
 import com.jiseung.sb4.interceptor.NoticeMemberInterceptor;
 
-@Configuration
+@Configuration // 설정파일이라는 뜻
 public class InterceptorConfig implements WebMvcConfigurer{
 
    @Autowired
