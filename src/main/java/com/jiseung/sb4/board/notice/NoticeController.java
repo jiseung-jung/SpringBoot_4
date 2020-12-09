@@ -2,9 +2,12 @@ package com.jiseung.sb4.board.notice;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +52,7 @@ public class NoticeController {
 	}
 	
 	@GetMapping("noticeWrite")
-	public ModelAndView setInsert() throws Exception{
+	public ModelAndView setInsert(BoardVO boardVO) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
 		mv.setViewName("board/boardWrite");
@@ -57,10 +60,17 @@ public class NoticeController {
 	}
 	
 	@PostMapping("noticeWrite")
-	public ModelAndView setInsert(BoardVO boardVO, MultipartFile [] files) throws Exception{
+	public ModelAndView setInsert(@Valid BoardVO boardVO, BindingResult bindingResult, MultipartFile [] files) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		for(MultipartFile f : files) {
 			System.out.println(f.getOriginalFilename());
+		}
+		
+		System.out.println("Notice Write ---------------------");
+		if(bindingResult.hasErrors()) {
+			System.out.println("검증 실패 ---------------------");
+			mv.setViewName("board/boardWrite");
+			return mv;
 		}
 		
 		int result = noticeService.setInsert(boardVO, files);

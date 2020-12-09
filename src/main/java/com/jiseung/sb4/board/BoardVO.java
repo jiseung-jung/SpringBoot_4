@@ -3,7 +3,7 @@ package com.jiseung.sb4.board;
 import java.sql.Date;
 import java.util.List;
 
-import com.jiseung.sb4.board.file.FileVO;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -11,7 +11,9 @@ import lombok.Data;
 public class BoardVO {
 	
 	private long num;
+	@NotEmpty
 	private String title;
+	@NotEmpty
 	private String writer;
 	private String contents;
 	private Date regDate;
