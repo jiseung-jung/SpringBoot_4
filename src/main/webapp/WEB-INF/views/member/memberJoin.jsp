@@ -43,6 +43,12 @@
     </div>
     
     <div class="form-group">
+      <label for="pw">Password:</label>
+      <form:password path="pw2" class="form-control"/>
+      <form:errors path="pw2" cssClass="error"></form:errors>
+    </div>
+    
+    <div class="form-group">
       <label for="name">Name:</label>
       <form:input path="name" class="form-control"/>
       <form:errors path="name" cssClass="error"></form:errors>

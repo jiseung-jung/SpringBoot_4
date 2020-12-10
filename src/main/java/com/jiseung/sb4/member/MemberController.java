@@ -65,10 +65,15 @@ public class MemberController {
 	public ModelAndView setInsert(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile [] files) throws Exception{
 		ModelAndView mv = new ModelAndView();
 		
-		if(bindingResult.hasErrors()) {
+		if(memberService.getMemberError(memberVO, bindingResult)) {
 			mv.setViewName("member/memberJoin");
 			return mv;
 		}
+		
+		//if(bindingResult.hasErrors()) {
+		//	mv.setViewName("member/memberJoin");
+		//	return mv;
+		//}
 		
 		int result = memberService.setInsert(memberVO, files);
 		

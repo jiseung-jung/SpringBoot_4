@@ -5,6 +5,7 @@ import java.io.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jiseung.sb4.board.file.FileVO;
@@ -22,6 +23,35 @@ public class MemberService {
 	private FileManager fileManager;
 	@Value("${member.filePath}")
 	private String filePath;
+	
+	
+	//검증 메서드
+	public boolean getMemberError(MemberVO memberVO, BindingResult bindingResult) throws Exception{
+		//result : true -> 검증 위반(실패)
+		//result : false -> 검증 성공
+		boolean result = false;
+		
+		//기본 Annotation 검증 결과
+		if(bindingResult.hasErrors()) {
+			result = true;
+		}
+		
+		//Password가 일치하는지 검증
+		if(!memberVO.getPw().equals(memberVO.getPw2())) {
+			//bindingResult.rejectValue("멤버변수명", "propertie 파일의 코드(키)", "코드가 없으면 기본메세지");
+			bindingResult.rejectValue("pw2", "memberVO.password.notEqual");
+			result = true;
+		}
+		
+		//id 중복검사
+		String id = memberMapper.getMemberIdCheck(memberVO);
+		if(memberVO.getId().equals(id)) {
+			bindingResult.rejectValue("id", "memberVO.id.Duplicate");
+			result = true;
+		}
+		
+		return result;
+	}
 	
 	
 	public int setInsert(MemberVO memberVO, MultipartFile [] files) throws Exception{

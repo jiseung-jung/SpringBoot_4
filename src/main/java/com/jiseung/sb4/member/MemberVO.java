@@ -18,6 +18,8 @@ public class MemberVO {
 	@NotEmpty
 	@Length(min=6, max=12)
 	private String pw;
+	
+	private String pw2;
 	@NotEmpty
 	@Length(min=2)
 	private String name;
